@@ -9,7 +9,7 @@ app.use(cors());
 connectDB();
 
 // Clerk Webhook Route (must use express.raw for verification)
-// app.post('/clerk', express.raw({ type: 'application/json' }),clerkWebhooks);
+app.post('/clerk', express.raw({ type: 'application/json' }),clerkWebhooks);
 
 
 
