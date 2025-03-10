@@ -37,10 +37,7 @@ const purchaseCourse=async (req,res)=>{
         const userId=req.auth.userId
         const userData=await User.findById(userId)
         const courseData=await Course.findById(courseId)
-       console.log("req.auth",req.auth)
 
-       
-       console.log("req.auth.userId",req.auth.userId)
         if(!userData || !courseData){
             res.status(400).json({success:false,messsage:'Data Not Found'})
         }
@@ -50,13 +47,14 @@ const purchaseCourse=async (req,res)=>{
             userId,
             amount:(courseData.coursePrice-courseData.discount * courseData.coursePrice/100).toFixed(2),
         }
-        console.log("purchaseData",purchaseData)
+
         const newPurchase=await Purchase.create(purchaseData);
 
         //stripe Gateway Initialize
 
         const stripeInstance=new stripe(process.env.STRIPE_SECRET_KEY);
-        const currency=process.env.CURRRENCY.toLowerCase();
+
+        const currency=process.env.CURRENCY.toLowerCase();
 
         // Creating line items to for stripe
 
