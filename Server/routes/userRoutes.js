@@ -1,6 +1,6 @@
 
 const express=require('express')
-const { getUserData, userEnrolledCourses,purchaseCourse, updateUserCourseProgress, addUserRating } = require('../controllers/userController.js')
+const { getUserData, userEnrolledCourses,purchaseCourse, updateUserCourseProgress, addUserRating,getUserCourseProgress } = require('../controllers/userController.js')
 
 
 const userRouter=express.Router()
