@@ -22,7 +22,6 @@ const userEnrolledCourses = async (req, res) => {
   try {
     const userId = req.auth.userId;
     const userData = await User.findById(userId).populate("enrolledCourses");
-    console.log(userData)
     res.json({ success: true, enrolledCourses: userData.enrolledCourses });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -36,9 +35,11 @@ const purchaseCourse = async (req, res) => {
     const { courseId } = req.body;
     const { origin } = req.headers;
     const userId = req.auth.userId;
+  
     const userData = await User.findById(userId);
     const courseData = await Course.findById(courseId);
-
+    console.log("courseId",courseId)
+    console.log("userdata",userData)
     if (!userData || !courseData) {
       res.status(400).json({ success: false, messsage: "Data Not Found" });
     }

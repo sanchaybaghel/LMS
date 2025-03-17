@@ -45,7 +45,6 @@ const getEducatorCourses=async (req,res)=>{
     try{
         const educator=req.auth.userId;
         const courses=await Course.find({educator})
-        console.log("courses",courses)
         res.json({success:true,courses})
     }
     catch(error){
@@ -66,7 +65,6 @@ const educatorDashboardData=async (req,res)=>{
             courseIds:{$in:courseIds},
             status:'completed'
         });
-        console.log("purchase",typeof(purchase));
         const totalEarnings=purchase.reduce((sum,purchase)=>sum+purchase.amount,0);
 
         // colllect unique enrolled student Ids with their courese title
