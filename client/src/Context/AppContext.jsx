@@ -58,7 +58,7 @@ export const AppContextProvider = (props) => {
   };
 
   const calculateRating = (course) => {
-    if (course.length === 0) {
+    if (course.courseRatings.length === 0) {
       return 0;
     }
     let totalRating = 0;

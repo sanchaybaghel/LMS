@@ -39,7 +39,6 @@ export const CourseDetails = () => {
       [index]: !prev[index],
     }));
   };
-
   return courseData ? (
     <div className="relative">
       <div className="absolute top-0 left-0 w-full h-96 -z-10 bg-gradient-to-b from-cyan-600 to-transparent"></div>
@@ -79,8 +78,9 @@ export const CourseDetails = () => {
               {courseData.courseRatings.length > 1 ? " ratings" : " rating"})
             </p>
             <p>
-              {courseData.enrolledStudents.length}{" "}
-              {courseData.enrolledStudents.length > 1 ? "Students" : "Student"}
+              {console.log("coursedata", courseData)}
+              {courseData.enrolledStudents?.length}{" "}
+              {courseData.enrolledStudents?.length > 1 ? "Students" : "Student"}
             </p>
           </div>
           <p className="text-sm">
@@ -90,6 +90,7 @@ export const CourseDetails = () => {
           <div className="pt-8 text-gray-800">
             <h2 className="text-xl font-semibold">Course Structure</h2>
             <div className="pt-5">
+              {console.log("couseData",courseData)}
               {courseData.courseContent.map((chapter, index) => (
                 <div
                   key={index}
