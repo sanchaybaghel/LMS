@@ -38,8 +38,6 @@ const purchaseCourse = async (req, res) => {
   
     const userData = await User.findById(userId);
     const courseData = await Course.findById(courseId);
-    console.log("courseId",courseId)
-    console.log("userdata",userData)
     if (!userData || !courseData) {
       res.status(400).json({ success: false, messsage: "Data Not Found" });
     }
