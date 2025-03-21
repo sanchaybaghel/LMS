@@ -14,7 +14,7 @@ export const AppContextProvider = (props) => {
   const currency = import.meta.env.VITE_CURRENCY;
   const navigate = useNavigate();
   const { getToken } = useAuth();
-  console.log(getToken)
+ 
   const { user } = useUser();
   
   const [allCourses, setAllCourses] = useState([]);
@@ -44,6 +44,7 @@ export const AppContextProvider = (props) => {
     }
     try {
       const token = await getToken();
+      console.log("Token",token)
       const { data } = await axios.get(backendUrl + "/api/user/data", {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -122,7 +123,6 @@ export const AppContextProvider = (props) => {
       fetchUserEnrolledCourses();
     }
   }, [user]);
-
   const value = {
     currency,
     allCourses,
