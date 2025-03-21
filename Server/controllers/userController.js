@@ -135,7 +135,7 @@ const getUserCourseProgress = async (req, res) => {
 const addUserRating = async (req, res) => {
   const userId = req.auth.userId;
   const { courseId, rating } = req.body;
-  if (!courseId || !userId || !rating || !rating < 1 || rating > 5) {
+  if (!courseId || !userId || !rating || rating < 1 || rating > 5) {
     return res.json({ success: false, message: "Invalid Details" });
   }
   try {
@@ -162,7 +162,7 @@ const addUserRating = async (req, res) => {
     await course.save();
     return res.json({ success: true, message: "Rating added" });
   } catch (error) {
-    return res.json({ success: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 

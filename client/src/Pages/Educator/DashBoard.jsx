@@ -2,17 +2,37 @@ import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../Context/AppContext";
 import { assets, dummyDashboardData } from "../../assets/assets";
 import { Loading } from "../../Components/Students/Loading";
+import axios from "axios";
+import { toast } from "react-toastify";
+
 
 export const DashBoard = () => {
-  const { currency } = useContext(AppContext);
+  const { currency ,backendUrl,isEducator,getToken} = useContext(AppContext);
   const [DashBoardData, setDashboardData] = useState(null);
   const fetchDashboardData = async () => {
-    setDashboardData(dummyDashboardData);
+    try{
+     
+      const token=await getToken()
+      const {data}=await axios.get(backendUrl + '/api/educator/dashboard',
+        {headers : {Authorization: `Bearer ${token}`}}
+      )
+     
+      if(data.success){
+        setDashboardData(data.dashboardData)
+      }
+      else{
+        console.log(data.message)
+        toast.error(data.message)
+      }
+    } catch (error){
+      toast.error(error.message)
+    }
   };
   useEffect(() => {
-    fetchDashboardData();
-  }, []);
-  console.log("dashboard", DashBoardData);
+   if(isEducator){
+    fetchDashboardData()
+   }
+  }, [isEducator]);
   return DashBoardData ? (
     <div className="min-h-screen flex flex-col items-start justify-between gap-8 md:p-8 md:pb-0 p-4 pt-8 pb-0">
       <div className="space-y-5">
@@ -65,7 +85,6 @@ export const DashBoard = () => {
                  
                   <tr key={index} className="border-b border-gray-500/20">
                     <td className="px-4 py-3 text-center hidden sm:table-cell">
-                      {console.log(index)}
                       {index + 1}
                     </td>
                     <td className="md:px-4 px-2 py-3 flex items-center space-x-3">

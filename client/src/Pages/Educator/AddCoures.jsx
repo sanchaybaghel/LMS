@@ -1,10 +1,14 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import uniqid from "uniqid";
 import Quill from "quill";
 import { assets } from "../../assets/assets";
 import 'quill/dist/quill.snow.css'; // Import Quill's CSS
+import { AppContext } from "../../Context/AppContext";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 export const AddCoures = () => {
+  const { backendUrl, getToken } = useContext(AppContext);
   const quillRef = useRef(null);
   const editorRef = useRef(null);
   const [courseTitle, setCourseTitle] = useState("");
@@ -78,7 +82,8 @@ export const AddCoures = () => {
           const newLecture = {
             ...lectureDetails,
             lectureOrder: chapter.chapterContent.length > 0 ? chapter.chapterContent.slice(-1)[0].lectureOrder + 1 : 1,
-            lectureId: uniqid()
+            lectureId: uniqid(),
+            isPreview: lectureDetails.isPreviewFree, // Ensure isPreview is included
           };
           chapter.chapterContent.push(newLecture);
         }
@@ -96,7 +101,39 @@ export const AddCoures = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
+    try {
+      if (!image) {
+        toast.error('Thumbnail not selected');
+        return;
+      }
+      const courseData = {
+        courseTitle,
+        courseDescription: quillRef.current.root.innerHTML, // Get HTML content from Quill editor
+        coursePrice: Number(coursePrice),
+        discount: Number(discount),
+        courseContent: chapter,
+      };
+      const formData = new FormData();
+      formData.append('courseData', JSON.stringify(courseData));
+      formData.append('image', image);
+      const token = await getToken();
+      const { data } = await axios.post(backendUrl + '/api/educator/add-course', formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (data.success) {
+        toast.success(data.message);
+        setCourseTitle('');
+        setCoursePrice(0);
+        setDiscount(0);
+        setImage(null);
+        setChapter([]);
+        quillRef.current.root.innerHTML = "";
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (

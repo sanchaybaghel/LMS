@@ -1,16 +1,20 @@
 import React,{useEffect, useState} from 'react'
 
 export const Rating = ({initialRating,onRate}) => {
+  
 
   const [rating,setRating]=useState(initialRating || 0);
   const handleRating=(value)=>{
+   
     setRating(value);
+   
     if(onRate) onRate(value)
   }
 
     useEffect(()=>{
       if(initialRating){
         setRating(initialRating)
+       
       }
     },[initialRating]);
 

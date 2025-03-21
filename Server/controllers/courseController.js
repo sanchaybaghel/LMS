@@ -20,7 +20,6 @@ const getCouresId = async (req, res) => {
         const courseData = await Course.findById(id).populate({ path: 'educator' });
         
         // Check if courseContent is defined
-        console.log("coursedata",courseData)
         if (courseData && courseData.courseContent) {
             // Remove lecture URL if isPreviewFree is false
             courseData.courseContent.forEach(chapter => {

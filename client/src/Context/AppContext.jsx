@@ -26,6 +26,7 @@ export const AppContextProvider = (props) => {
     try {
       const { data } = await axios.get(backendUrl + "/api/course/all");
       if (data.success) {
+        
         setAllCourses(data.courses);
       } else {
         toast.error(data.message);
@@ -43,7 +44,6 @@ export const AppContextProvider = (props) => {
     }
     try {
       const token = await getToken();
-      console.log(token)
       const { data } = await axios.get(backendUrl + "/api/user/data", {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -103,9 +103,7 @@ export const AppContextProvider = (props) => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       if (data.success) {
-        console.log("data",data)
         setEnrolledCourses(data.enrolledCourses.reverse());
-        console.log("enrolledcourses",enrolledCourses)
       } else {
         toast.error(data.message);
       }
@@ -121,7 +119,6 @@ export const AppContextProvider = (props) => {
   useEffect(() => {
     if (user) {
       fetchUserData();
-      console.log("enrolled course",enrolledCourses)
       fetchUserEnrolledCourses();
     }
   }, [user]);
@@ -143,6 +140,7 @@ export const AppContextProvider = (props) => {
     setUserData,
     getToken,
     fetchAllCourses,
+    fetchUserEnrolledCourses
   };
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
