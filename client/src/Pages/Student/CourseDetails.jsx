@@ -71,7 +71,7 @@ export const CourseDetails = () => {
   useEffect(() => {
    
     if(userData && courseData){
-      setisAlreadyEnrolled(userData.enrolledCourses.includes(courseData._id))
+      setisAlreadyEnrolled(userData?.enrolledCourses?.includes(courseData._id))
     }
    
   },[userData,courseData]);
@@ -122,8 +122,8 @@ export const CourseDetails = () => {
             </p>
             <p>
               
-              {courseData.enrolledStudents?.length}{" "}
-              {courseData.enrolledStudents?.length > 1 ? "Students" : "Student"}
+              {courseData?.enrolledStudents?.length}{" "}
+              {courseData?.enrolledStudents?.length > 1 ? "Students" : "Student"}
             </p>
           </div>
           <p className="text-sm">
@@ -133,7 +133,7 @@ export const CourseDetails = () => {
           <div className="pt-8 text-gray-800">
             <h2 className="text-xl font-semibold">Course Structure</h2>
             <div className="pt-5">
-              {courseData.courseContent.map((chapter, index) => (
+              {courseData?.courseContent?.map((chapter, index) => (
                 <div
                   key={index}
                   className="border border-gray-300 bg-white mb-2 rounded-lg shadow-sm"
