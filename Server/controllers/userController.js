@@ -112,7 +112,7 @@ const updateUserCourseProgress = async (req, res) => {
     }
     res.json({ success: true, message: "Progress Updated" });
   } catch (error) {
-    console.log(error);
+    
     res.json({ success: false, message: error.message });
   }
 };
