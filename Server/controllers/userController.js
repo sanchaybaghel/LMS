@@ -58,7 +58,7 @@ const purchaseCourse = async (req, res) => {
 
     const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
 
-    const currency = process.env.CURRENCY;
+    const currency = process.env.CURRENCY.toLowerCase();
 
     // Creating line items to for stripe
 
@@ -112,6 +112,7 @@ const updateUserCourseProgress = async (req, res) => {
     }
     res.json({ success: true, message: "Progress Updated" });
   } catch (error) {
+    console.log(error);
     res.json({ success: false, message: error.message });
   }
 };
