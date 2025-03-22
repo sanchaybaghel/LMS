@@ -38,8 +38,7 @@ const purchaseCourse = async (req, res) => {
 
     const userData = await User.findById(req.auth.userId);
     const courseData = await Course.findById(courseId);
-    console.log("usrdata",userData)
-    console.log("coursedata",courseData)
+   
     if (!userData || !courseData) {
       res.status(400).json({ success: false, messsage: "Data Not Found" });
     }
@@ -59,7 +58,7 @@ const purchaseCourse = async (req, res) => {
 
     const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
 
-    const currency = process.env.CURRENCY.toLowerCase();
+    const currency = process.env.CURRENCY;
 
     // Creating line items to for stripe
 
