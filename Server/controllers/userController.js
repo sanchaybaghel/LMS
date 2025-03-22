@@ -58,7 +58,8 @@ const purchaseCourse = async (req, res) => {
 
     const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
 
-    const currency = process.env.CURRENCY.toLowerCase();
+    const currency = (process.env.CURRENCY || 'inr').toLowerCase(); // Add default value
+    console.log("Currency:", currency);
 
     // Creating line items to for stripe
 
